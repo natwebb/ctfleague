@@ -3,8 +3,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  validates :username, uniqueness: true, format: { with: /\A[a-zA-Z0-9]+\z/, message: "username can only contain letters and numbers" }
+  has_many :leagues
 
+  validates :username, uniqueness: true, format: { with: /\A[a-zA-Z0-9]+\z/, message: "username can only contain letters and numbers" }
   validates_presence_of :email
 
   def self.find_for_database_authentication(conditions={})

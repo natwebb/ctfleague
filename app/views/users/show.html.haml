@@ -1,0 +1,10 @@
+- if current_user == @user
+  %h1 Your Profile
+- else
+  %h1 #{@user.email}'s Profile
+
+- if current_user == @user
+  %h2 Your Leagues
+  - @user.leagues.each do |league|
+    .league
+      = league.name
