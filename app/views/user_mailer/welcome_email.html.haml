@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h1 Welcome to CTFLeague, #{@user.username}!
+    %p
+      You have successfully signed up for CTFLeague.
+      Your username is: #{@user.username}. Your email address is #{@user.email}.
+      %br/
+    %p
+      To log in to the site, just follow this link: #{@url}.
+    %p Thanks for joining and have a great day!

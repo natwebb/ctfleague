@@ -21,6 +21,8 @@ gem 'spring',        group: :development
 group :development, :test do
   gem 'rspec-rails'
   gem 'rspec'
+  gem 'email_spec'
+  gem 'letter_opener'
 end
 
 group :test do
