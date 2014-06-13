@@ -3,7 +3,8 @@ require 'spec_helper'
 feature "User signs up" do
   scenario "happy path" do
     visit '/'
-    click_link "I'm Ready!"
+    click_link "Sign In"
+    click_link "Sign up"
     fill_in "Email", with: "joe@example.com"
     fill_in "Username", with: "joe"
     fill_in "Password", with: "mypassword"
