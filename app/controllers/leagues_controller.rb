@@ -17,6 +17,16 @@ class LeaguesController < ApplicationController
     @league = League.find(params[:id])
   end
 
+  def update
+    @league = League.find_by_id(params[:id])
+    if @league.update(invite_emails: params[:league][:invite_emails])
+      redirect_to league_path(@league.id), notice: "Invited players to your league!"
+    else
+      flash[:alert] = "Your players could not be invited."
+      render :new
+    end
+  end
+
   def show
     @league = League.find(params[:id])
   end

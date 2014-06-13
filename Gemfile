@@ -19,8 +19,8 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 group :development, :test do
-  gem 'rspec-rails'
-  gem 'rspec'
+  gem 'rspec-rails', '<2.99'
+  gem 'rspec', '<3.0'
   gem 'email_spec'
   gem 'letter_opener'
 end

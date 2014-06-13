@@ -1,1 +1,7 @@
 %h1= @league.name
+
+- if current_user == @league.commissioner
+  %h2 Add Members to the League
+  = simple_form_for(@league) do |f|
+    = f.input :invite_emails, :as => :text
+    = f.button :submit, "Invite Players"

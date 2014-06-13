@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe League do
   it { should belong_to :user }
   it { should belong_to :commissioner }

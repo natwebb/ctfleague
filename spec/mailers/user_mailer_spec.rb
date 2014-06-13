@@ -1,4 +1,4 @@
-require "rails_helper"
+require "spec_helper"
 require_relative "../../app/mailers/user_mailer"
 
 describe "Welcome email" do
