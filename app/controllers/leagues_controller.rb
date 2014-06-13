@@ -6,6 +6,7 @@ class LeaguesController < ApplicationController
   def create
     @league = current_user.leagues.build(league_params)
     if @league.save
+      @league.users << current_user
       redirect_to league_path(@league.id), notice: "Your league has been created!"
     else
       flash[:alert] = "Your league could not be created."
@@ -29,6 +30,31 @@ class LeaguesController < ApplicationController
 
   def show
     @league = League.find(params[:id])
+  end
+
+  def send_invite
+    @league = League.find(params[:league_id])
+
+    emails = params[:emails].split(',').map!{|e| e.strip}
+
+    league_key = @league.league_key || @league.generate_league_key
+
+    LeagueMailer.invite_email(emails, @league.id, league_key).deliver
+
+    redirect_to league_path(@league.id), notice: "Your invites have been sent!"
+  end
+
+  def join_league
+    @league = League.find(params[:league_id])
+    @user = User.find(params[:user_id])
+
+    if @league.league_key = params[:league_key]
+      @league.users << @user
+      redirect_to league_path(@league.id)
+    else
+      flash[:alert] = "You have entered an incorrect League Key."
+      redirect_to league_path(@league.id)
+    end
   end
 
   private

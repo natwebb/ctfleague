@@ -1,7 +1,22 @@
 %h1= @league.name
 
+%h2 Current Members
+- @league.users.each do |user|
+  %p #{user.username}
+
 - if current_user == @league.commissioner
   %h2 Add Members to the League
-  = simple_form_for(@league) do |f|
-    = f.input :invite_emails, :as => :text
-    = f.button :submit, "Invite Players"
+  = form_tag('/invite', method: 'post') do
+    = label_tag(:emails, "Enter player emails: ")
+    = text_field_tag(:emails)
+    = hidden_field_tag(:league_id, @league.id)
+    = submit_tag("Invite")
+- else
+  %h2 Join the League
+  = form_tag('/join', method: 'post') do
+    = label_tag(:league_key, "Enter League Key")
+    = text_field_tag(:league_key)
+    = hidden_field_tag(:league_id, @league.id)
+    = hidden_field_tag(:user_id, current_user.id)
+    = submit_tag("Join")
+
