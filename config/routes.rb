@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :users, :leagues
+  resources :users, :leagues, :drafts
 
   post 'invite' => 'leagues#send_invite'
   post 'join' => 'leagues#join_league'
