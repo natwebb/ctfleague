@@ -11,7 +11,7 @@
     = text_field_tag(:emails)
     = hidden_field_tag(:league_id, @league.id)
     = submit_tag("Invite")
-- else
+- if !@league.users.include?(current_user)
   %h2 Join the League
   = form_tag('/join', method: 'post') do
     = label_tag(:league_key, "Enter League Key")

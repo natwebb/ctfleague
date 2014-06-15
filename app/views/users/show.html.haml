@@ -5,7 +5,9 @@
 
 - if current_user == @user
   %h2 Your Leagues
-  - @user.leagues.each do |league|
+  - @user.memberships.each do |membership|
     .league
-      %h3= league.name
+      - league = membership.league
+      %h3
+        = link_to "#{league.name}", league_path(league.id)
       %p= 'Commissioner: ' + league.commissioner.username
