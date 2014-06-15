@@ -37,7 +37,7 @@ class LeaguesController < ApplicationController
 
     emails = params[:emails].split(',').map!{|e| e.strip}
 
-    league_key = @league.league_key || @league.generate_league_key
+    league_key = @league.league_key
 
     LeagueMailer.invite_email(emails, @league.id, league_key).deliver
 
