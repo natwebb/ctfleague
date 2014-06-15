@@ -13,7 +13,6 @@
         - else
           %li= link_to 'Sign in', new_user_session_path
       %ul.main_navigation
-        //%li= link_to "squmbls", posts_path
         - if user_signed_in?
           %li= link_to "create a new league", new_league_path
           %li= link_to "edit profile", edit_user_registration_path
