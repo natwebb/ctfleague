@@ -1,2 +1,24 @@
-%h1= @draft.id
-%h1= @league.name
+%h1 Draft for #{@league.name}
+
+%table
+  %thead
+    %th Last Name
+    %th First Name
+    %th Aim
+    %th Sight
+    %th Stealth
+    %th Speed
+    %th Hardiness
+    %th Leadership
+  %tbody
+    - @draft.tokens.each do |token|
+      - soldier = token.units.first.soldiers.first
+      %tr
+        %td= soldier.last_name
+        %td= soldier.first_name
+        %td= soldier.aim
+        %td= soldier.sight
+        %td= soldier.stealth
+        %td= soldier.speed
+        %td= soldier.hardiness
+        %td= soldier.leadership

@@ -1,8 +1,4 @@
 class DraftsController < ApplicationController
-  def new
-    @draft = Draft.new
-  end
-
   def create
     @league = League.find(params[:league_id])
 
