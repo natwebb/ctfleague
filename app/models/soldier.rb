@@ -1,3 +1,5 @@
+require 'faker'
+
 class Soldier < ActiveRecord::Base
   belongs_to :unit
 
@@ -7,8 +9,8 @@ class Soldier < ActiveRecord::Base
     self.damage = 0
     self.rank = 1
     self.active = false
-    self.first_name = "Tim" #Faker::Name.first_name
-    self.last_name = "Meadows" #Faker::Name.last_name
+    self.first_name = Faker::Name.first_name
+    self.last_name = Faker::Name.last_name
     self.aim = generate_stat
     self.stealth = generate_stat
     self.sight = generate_stat
