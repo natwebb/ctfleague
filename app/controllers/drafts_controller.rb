@@ -8,6 +8,7 @@ class DraftsController < ApplicationController
     @league.save
 
     @draft.generate_soldiers
+    @draft.generate_draft_order
 
     redirect_to league_draft_path(@league.id, @draft.id)
   end
