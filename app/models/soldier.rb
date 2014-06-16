@@ -23,6 +23,8 @@ class Soldier < ActiveRecord::Base
   private
 
   def generate_stat
-    50
+    require 'randomgaussian'
+    rg = RandomGaussian.new(50,16)
+    return rg.norminv
   end
 end
