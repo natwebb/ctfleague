@@ -1,9 +1,7 @@
 %h1= @league.name
 
 - if current_user == @league.commissioner && !@league.active
-  = form_tag('/drafts', method: 'post') do
-    = hidden_field_tag(:league_id, @league.id)
-    = submit_tag("Begin Draft")
+  = button_to "Begin Draft", league_drafts_path(@league)
 
 %h2 Current Members
 - @league.users.each do |user|

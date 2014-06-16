@@ -9,7 +9,7 @@ class DraftsController < ApplicationController
 
     @draft.generate_soldiers
 
-    redirect_to draft_path(@draft.id)
+    redirect_to league_draft_path(@league.id, @draft.id)
   end
 
   def show
