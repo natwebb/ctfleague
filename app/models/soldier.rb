@@ -1,4 +1,5 @@
 require 'faker'
+require 'randomgaussian'
 
 class Soldier < ActiveRecord::Base
   belongs_to :unit
@@ -23,7 +24,6 @@ class Soldier < ActiveRecord::Base
   private
 
   def generate_stat
-    require 'randomgaussian'
     rg = RandomGaussian.new(50,16)
     return rg.norminv
   end
