@@ -5,7 +5,11 @@ Rails.application.routes.draw do
 
   resources :users
   resources :leagues do
-    resources :drafts
+    resources :drafts do
+      member do
+        get 'choose'
+      end
+    end
   end
 
   post 'invite' => 'leagues#send_invite'

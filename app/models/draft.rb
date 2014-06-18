@@ -29,8 +29,34 @@ class Draft < ActiveRecord::Base
       position = position +1
     end
 
-    self.snake_positions.each do |sp|
-      puts sp.position
+    self.current_position = 1
+    self.save
+  end
+
+  def send_draft_beginning_emails
+    @league = League.find(self.league_id)
+    @snake_positions = self.snake_positions
+
+    @snake_positions.each do |sp|
+      DraftMailer.draft_beginning_email(@league, sp, self).deliver
     end
+  end
+
+  def increment_current_position
+    if self.draft_reversed
+      if self.current_position > 1
+        self.current_position = self.current_position - 1
+      else
+        self.draft_reversed = false
+      end
+    else
+      if self.current_position == self.snake_positions.length
+        self.draft_reversed = true
+      else
+        self.current_position = self.current_position + 1
+      end
+    end
+
+    self.save
   end
 end

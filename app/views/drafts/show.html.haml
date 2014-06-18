@@ -1,5 +1,12 @@
-%h1 Draft for
+%h2 Welcome to the draft for
 %h1= link_to "#{@league.name}", league_path(@league.id)
+
+- @current_position = @draft.snake_positions.find_by position: @draft.current_position
+
+- if @current_position.user == current_user
+  %h2 It is your turn to draft!
+-else
+  %h2 Current user to draft is #{@current_position.user.username}, who is position #{@current_position.position} in the draft.
 
 %table
   %thead
@@ -12,6 +19,8 @@
     %th Hardiness
     %th Leadership
     %th Average
+    - if @current_position.user == current_user
+      %th
   %tbody
     - @draft.tokens.each do |token|
       - soldier = token.units.first.soldiers.first
@@ -25,3 +34,5 @@
         %td= soldier.hardiness
         %td= soldier.leadership
         %td= (soldier.aim + soldier.sight + soldier.stealth + soldier.speed + soldier.hardiness + soldier.leadership)/6
+        - if @current_position.user == current_user
+          %td= link_to "Click to Draft", choose_league_draft_path(@league, @draft)
