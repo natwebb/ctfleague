@@ -43,6 +43,21 @@ class League < ActiveRecord::Base
     end
   end
 
+  def iterate_round_robin
+    @round_robin = self.round_robins.last
+    @members = @round_robin.round_robin_members
+
+    @members.each do |member|
+      if member.position > 1
+        if member.position == @members.length
+          member.position = 2
+        else
+          member.position = member.position + 1
+        end
+      end
+    end
+  end
+
   private
 
   def generate_league_key
