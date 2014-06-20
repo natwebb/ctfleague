@@ -1,0 +1,6 @@
+%h1 Create Your Team
+%h2 for the league #{@league.name}
+
+= simple_form_for([@league, @new_team]) do |f|
+  = f.input :name, :as => :text, :label => "Team Name"
+  = f.button :submit, "create team"

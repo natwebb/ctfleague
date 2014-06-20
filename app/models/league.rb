@@ -5,7 +5,8 @@ class League < ActiveRecord::Base
   has_many :drafts
   has_many :memberships
   has_many :users, through: :memberships
-  has_many :teams, through: :league_teams
+  has_many :round_robins
+  has_many :matches
 
   validates_presence_of :commissioner
   validates_uniqueness_of :name
@@ -13,6 +14,34 @@ class League < ActiveRecord::Base
   scope :active, -> { where(active: true) }
 
   after_create :generate_league_key
+
+  def generate_round_robin
+    @members = self.users.shuffle
+    @round_robin = self.round_robins.create
+
+    position = 1
+    @members.each do |member|
+      @round_robin.round_robin_members.create(:user => member, :position => position)
+      position = position + 1
+    end
+
+    generate_matches
+  end
+
+  def generate_matches
+    @round_robin = self.round_robins.last
+    @members = @round_robin.round_robin_members
+    @length = @members.length
+
+    @members.each do |member|
+      if member.position <= (@length/2)
+        @match = self.matches.create
+        @match.users << member.user
+        @match.users << @members.find_by_position(@length + 1 - member.position).user
+        @match.save
+      end
+    end
+  end
 
   private
 

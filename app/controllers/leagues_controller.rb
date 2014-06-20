@@ -7,7 +7,7 @@ class LeaguesController < ApplicationController
     @league = current_user.leagues.build(league_params)
     if @league.save
       @league.users << current_user
-      redirect_to league_path(@league.id), notice: "Your league has been created!"
+      redirect_to new_league_team_path(@league), notice: "Your league has been created!"
     else
       flash[:alert] = "Your league could not be created."
       render :new
@@ -47,8 +47,13 @@ class LeaguesController < ApplicationController
   def join_league
     @league = League.find(params[:league_id])
     @user = User.find(params[:user_id])
+    @team = Team.new
+    @team.name = params[:team_name]
+    @team.save
 
     if @league.league_key = params[:league_key]
+      @league.teams << @team
+      @user.teams << @team
       @league.users << @user
       redirect_to league_path(@league.id)
     else

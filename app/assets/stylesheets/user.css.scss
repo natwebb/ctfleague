@@ -1,0 +1,17 @@
+.profile_h1 {
+  text-align: center;
+}
+
+.profile_edit_link {
+  text-align: center;
+  margin-top: -5px;
+
+  a{
+    text-decoration: none;
+    color: black;
+  }
+
+  a:hover {
+    color: lime;
+  }
+}

@@ -7,17 +7,18 @@
     = csrf_meta_tags
   %body
     %header
+      %ul.main_navigation
+        %li= link_to 'Home', root_path
+        - if user_signed_in?
+          %li= link_to "User: #{current_user.username}", user_path(current_user)
+          %li= link_to "New League", new_league_path
       %ul.devise_navigation
         - if user_signed_in?
-          %li= link_to 'Sign out', destroy_user_session_path, method: 'delete'
+          %li= link_to 'Sign Out', destroy_user_session_path, method: 'delete'
         - else
-          %li= link_to 'Sign in', new_user_session_path
-      %ul.main_navigation
-        - if user_signed_in?
-          %li= link_to "create a new league", new_league_path
-          %li= link_to "edit profile", edit_user_registration_path
-          %li= link_to "profile", user_path(current_user)
+          %li= link_to 'Sign In', new_user_session_path
       //= render partial: "shared/layout_buttons"
     .alert= alert
     .notice= notice
-    = yield
+    #wrapper
+      = yield

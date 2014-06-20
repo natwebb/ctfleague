@@ -1,6 +1,7 @@
 class Draft < ActiveRecord::Base
   belongs_to :league
-  has_many :tokens
+  has_many :available_tokens
+  has_many :tokens, through: :available_tokens
   has_many :snake_positions
   has_many :users, through: :snake_positions
 

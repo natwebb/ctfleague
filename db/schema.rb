@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140617195947) do
+ActiveRecord::Schema.define(version: 20140620155349) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "available_tokens", force: true do |t|
+    t.integer  "draft_id"
+    t.integer  "token_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "drafts", force: true do |t|
     t.integer  "league_id"
@@ -34,6 +41,20 @@ ActiveRecord::Schema.define(version: 20140617195947) do
     t.boolean "active"
     t.integer "user_id"
     t.string  "league_key"
+    t.boolean "drafting"
+  end
+
+  create_table "match_members", force: true do |t|
+    t.integer  "match_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "matches", force: true do |t|
+    t.integer  "league_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "memberships", force: true do |t|
@@ -41,6 +62,20 @@ ActiveRecord::Schema.define(version: 20140617195947) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+  end
+
+  create_table "round_robin_members", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "round_robin_id"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "round_robins", force: true do |t|
+    t.integer  "league_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "seasons", force: true do |t|
@@ -74,6 +109,13 @@ ActiveRecord::Schema.define(version: 20140617195947) do
     t.integer  "unit_id"
   end
 
+  create_table "team_ownerships", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "team_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "teams", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -84,7 +126,7 @@ ActiveRecord::Schema.define(version: 20140617195947) do
   create_table "tokens", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "draft_id"
+    t.integer  "team_id"
   end
 
   create_table "units", force: true do |t|
