@@ -8,7 +8,14 @@
     - else
       %h2 Time to fight!
       - @league.matches.each do |match|
-        %p #{match.users.first.username} vs. #{match.users.last.username}
+        - if match.finished
+          %p.finished_match #{match.users.first.username} vs. #{match.users.last.username}
+        -else
+          %p.active_match #{match.users.first.username} vs. #{match.users.last.username}
+          = form_tag('/finish', method: 'post') do
+            = hidden_field_tag(:match_id, match.id)
+            = hidden_field_tag(:league_id, @league.id)
+            = submit_tag("Finish")
 - else
   - if current_user == @league.commissioner
     = button_to "Begin Draft", league_drafts_path(@league)

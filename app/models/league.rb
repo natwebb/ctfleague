@@ -17,7 +17,7 @@ class League < ActiveRecord::Base
 
   def generate_round_robin
     @members = self.users.shuffle
-    @round_robin = self.round_robins.create
+    @round_robin = self.round_robins.create(:round => 1)
 
     position = 1
     @members.each do |member|
@@ -29,6 +29,7 @@ class League < ActiveRecord::Base
   end
 
   def generate_matches
+    puts "Generating matches"
     @round_robin = self.round_robins.last
     @members = @round_robin.round_robin_members
     @length = @members.length
@@ -43,7 +44,33 @@ class League < ActiveRecord::Base
     end
   end
 
+  def check_for_end_of_round
+    puts "Checking for end of round"
+
+    @round_robin = self.round_robins.last
+
+    end_of_round = true
+    self.matches.each do |match|
+      end_of_round = false if !match.finished
+    end
+
+    check_for_end_of_tournament if end_of_round
+  end
+
+  def check_for_end_of_tournament
+    puts "Checking for end of tournament"
+    @round_robin = self.round_robins.last
+
+    if @round_robin.round == (@round_robin.round_robin_members.length - 1)
+      end_tournament
+    else
+      iterate_round_robin
+      generate_matches
+    end
+  end
+
   def iterate_round_robin
+    puts "Iterating round robin"
     @round_robin = self.round_robins.last
     @members = @round_robin.round_robin_members
 
@@ -55,7 +82,17 @@ class League < ActiveRecord::Base
           member.position = member.position + 1
         end
       end
+      member.save
     end
+
+    @round_robin.round = @round_robin.round + 1
+    @round_robin.save
+  end
+
+  def end_tournament
+    puts "Ending tournament"
+    self.active = false
+    self.save
   end
 
   private
