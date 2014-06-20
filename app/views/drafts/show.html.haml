@@ -1,12 +1,12 @@
-%h2 Welcome to the draft for
-%h1= link_to "#{@league.name}", league_path(@league.id)
+%h2.draft_h2 Welcome to the draft for
+%h1.draft_h1= link_to "#{@league.name}", league_path(@league.id)
 
 - @current_position = @draft.snake_positions.find_by position: @draft.current_position
 
 - if @current_position.user == current_user
-  %h2 It is your turn to draft!
+  %h2.draft_h2 It is your turn to draft!
 -else
-  %h2 Current user to draft is #{@current_position.user.username}, who is position #{@current_position.position} in the draft.
+  %h2.draft_h2 Current user to draft is #{@current_position.user.username}, who is position #{@current_position.position} in the draft.
 
 %table
   %thead
