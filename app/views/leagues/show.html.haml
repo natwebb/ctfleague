@@ -1,4 +1,6 @@
 %h1.league_h1= @league.name
+%h2.league_h2 Season #{@league.season}
+
 - if @league.users.include?(current_user)
   - my_team = current_user.teams.find_by_league_id(@league.id)
   %h2= button_to "View My Team", league_team_path(@league.id, my_team.id), :class => 'team_button', :method => :get
@@ -20,7 +22,7 @@
           %h2= button_to "Start", start_league_match_path(@league, match), :class => 'draft_button'
 - else
   - if current_user == @league.commissioner
-    = button_to "Begin Draft", league_drafts_path(@league), :class => 'draft_button'
+    = button_to "Begin Season", league_drafts_path(@league), :class => 'draft_button'
     %h2.league_h2 Add Members to the League
     = form_tag('/invite', method: 'post') do
       = label_tag(:emails, "Enter player emails: ")

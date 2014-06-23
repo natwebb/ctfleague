@@ -29,7 +29,6 @@ class League < ActiveRecord::Base
   end
 
   def generate_matches
-    puts "Generating matches"
     @round_robin = self.round_robins.last
     @members = @round_robin.round_robin_members
     @length = @members.length
@@ -37,6 +36,7 @@ class League < ActiveRecord::Base
     @members.each do |member|
       if member.position <= (@length/2)
         @match = self.matches.create
+        @match.season = self.season
         @match.users << member.user
         @match.users << @members.find_by_position(@length + 1 - member.position).user
         @match.save
@@ -45,8 +45,6 @@ class League < ActiveRecord::Base
   end
 
   def check_for_end_of_round
-    puts "Checking for end of round"
-
     @round_robin = self.round_robins.last
 
     end_of_round = true
@@ -58,7 +56,6 @@ class League < ActiveRecord::Base
   end
 
   def check_for_end_of_tournament
-    puts "Checking for end of tournament"
     @round_robin = self.round_robins.last
 
     if @round_robin.round == (@round_robin.round_robin_members.length - 1)
@@ -90,7 +87,7 @@ class League < ActiveRecord::Base
   end
 
   def end_tournament
-    puts "Ending tournament"
+    self.season = self.season + 1
     self.active = false
     self.save
   end
