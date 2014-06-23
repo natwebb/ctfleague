@@ -20,6 +20,17 @@
         %h3.active_match #{t1.name} (#{p1.username}) vs. #{t2.name} (#{p2.username})
         - if p1 == current_user || p2 == current_user
           %h2= button_to "Start", start_league_match_path(@league, match), :class => 'draft_button'
+      - @league.matches.finished.where(season: @league.season).each do |match|
+        - p1 = match.match_members.first.user
+        - p2 = match.match_members.last.user
+        - if match.match_members.first.winner
+          %h3.finished_match
+            %span.winner #{p1.username}
+            vs. #{p2.username}
+        - else
+          %h3.finished_match
+            %span.winner #{p2.username}
+            vs. #{p1.username}
 - else
   - if current_user == @league.commissioner
     = button_to "Begin Season", league_drafts_path(@league), :class => 'draft_button'
