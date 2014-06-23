@@ -6,7 +6,7 @@
   margin-bottom: 20px;
 }
 
-.draft_button, input[value='Invite'] {
+.draft_button, .team_button, input[value='Invite'] {
   border-width: 5px;
   border-style: solid none none none;
   width: 25%;
@@ -26,6 +26,11 @@ input[value='Invite'] {
   background-color: #B2FFB2;
 }
 
+.team_button {
+  border-color: blue;
+  background-color: #9999FF;
+}
+
 input#emails {
   height: 100px;
 }
@@ -42,6 +47,14 @@ input#emails {
   background-color: #DDDDDD;
 }
 
+.active_match, .finished_match {
+  text-align: center;
+}
+
 .finished_match {
-  color: gray;
+  color: lightgray;
+}
+
+.winner {
+  color: black;
 }
