@@ -3,13 +3,13 @@
 
 - if @league.users.include?(current_user)
   - my_team = current_user.teams.find_by_league_id(@league.id)
-  %h2= button_to "View My Team", league_team_path(@league.id, my_team.id), :class => 'team_button', :method => :get
+  = button_to "View My Team", league_team_path(@league.id, my_team.id), :class => 'team_button', :method => :get
 
 - if @league.active
   - if @league.users.include?(current_user)
     - if @league.drafting
       - draft = @league.drafts.last
-      %h2= button_to "View Draft", league_draft_path(@league.id, draft.id), :class => 'draft_button', :method => :get
+      = button_to "View Draft", league_draft_path(@league.id, draft.id), :class => 'draft_button', :method => :get
     - else
       %h2.league_h2 Time to fight!
       - @league.matches.active.each do |match|
@@ -19,7 +19,7 @@
         - t2 = p2.teams.find_by_league_id(@league.id)
         %h3.active_match #{t1.name} (#{p1.username}) vs. #{t2.name} (#{p2.username})
         - if p1 == current_user || p2 == current_user
-          %h2= button_to "Start", start_league_match_path(@league, match), :class => 'draft_button'
+          = button_to "Start", start_league_match_path(@league, match), :class => 'draft_button'
       - @league.matches.finished.where(season: @league.season).each do |match|
         - p1 = match.match_members.first.user
         - p2 = match.match_members.last.user
