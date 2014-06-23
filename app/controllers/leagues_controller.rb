@@ -62,16 +62,6 @@ class LeaguesController < ApplicationController
     end
   end
 
-  def finish_match
-    @league = League.find(params[:league_id])
-    @match = Match.find(params[:match_id])
-
-    @match.finish
-    @league.check_for_end_of_round
-
-    redirect_to league_path(@league), notice: "The match has been finished."
-  end
-
   private
 
   def league_params

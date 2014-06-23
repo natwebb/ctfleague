@@ -35,4 +35,4 @@
         %td= soldier.leadership
         %td= (soldier.aim + soldier.sight + soldier.stealth + soldier.speed + soldier.hardiness + soldier.leadership)/6
         - if @current_position.user == current_user
-          %td= button_to "Click to Draft", choose_league_draft_path(@league, @draft, :token_id => token.id)
+          %td= button_to "Draft", choose_league_draft_path(@league, @draft, :token_id => token.id)

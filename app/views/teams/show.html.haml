@@ -1,0 +1,64 @@
+%h1.draft_h1= @team.name
+%h2.draft_h2= link_to "#{@league.name}", league_path(@league.id)
+
+%h2 Current Squad
+%table
+  %thead
+    %th Last Name
+    %th First Name
+    %th Aim
+    %th Sight
+    %th Stealth
+    %th Speed
+    %th Hardiness
+    %th Leadership
+    %th Average
+    %th Remove from Squad
+  %tbody
+    - @team.tokens.on_squad.each do |token|
+      - soldier = token.units.first.soldiers.first
+      %tr
+        %td= soldier.last_name
+        %td= soldier.first_name
+        %td= soldier.aim
+        %td= soldier.sight
+        %td= soldier.stealth
+        %td= soldier.speed
+        %td= soldier.hardiness
+        %td= soldier.leadership
+        %td= (soldier.aim + soldier.sight + soldier.stealth + soldier.speed + soldier.hardiness + soldier.leadership)/6
+        %td
+          = simple_form_for([@league, @team, token]) do |f|
+            = f.hidden_field :on_squad, :value => false
+            = f.button :submit, "Remove"
+
+%h2 Team Roster
+%table
+  %thead
+    %th Last Name
+    %th First Name
+    %th Aim
+    %th Sight
+    %th Stealth
+    %th Speed
+    %th Hardiness
+    %th Leadership
+    %th Average
+    %th Add to Squad
+  %tbody
+    - @team.tokens.off_squad.each do |token|
+      - soldier = token.units.first.soldiers.first
+      %tr
+        %td= soldier.last_name
+        %td= soldier.first_name
+        %td= soldier.aim
+        %td= soldier.sight
+        %td= soldier.stealth
+        %td= soldier.speed
+        %td= soldier.hardiness
+        %td= soldier.leadership
+        %td= (soldier.aim + soldier.sight + soldier.stealth + soldier.speed + soldier.hardiness + soldier.leadership)/6
+        %td
+          = simple_form_for([@league, @team, token]) do |f|
+            = f.hidden_field :on_squad, :value => true
+            = f.button :submit, "Add"
