@@ -16,6 +16,11 @@ class TeamsController < ApplicationController
     end
   end
 
+  def show
+    @league = League.find(params[:league_id])
+    @team = Team.find(params[:id])
+  end
+
   private
 
   def team_params
