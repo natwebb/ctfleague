@@ -5,7 +5,9 @@ Rails.application.routes.draw do
 
   resources :users
   resources :leagues do
-    resources :teams
+    resources :teams do
+      resources :tokens
+    end
     resources :drafts do
       member do
         post 'choose'
