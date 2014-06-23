@@ -35,7 +35,7 @@ class MatchesController < ApplicationController
   def simulate_match
     @match.tokens.each do |token|
       soldier = token.units.first.soldiers.first
-      soldier.damage = 1
+      soldier.damage = soldier.damage + 1
       soldier.save
     end
 
