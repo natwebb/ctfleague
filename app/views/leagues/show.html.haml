@@ -60,17 +60,19 @@
 
 - if @league.users.include?(current_user)
   %h2.league_h2 Previous Seasons
-  - @league.season.times do |i|
-    - if i > 0
-      %h3.season Season #{i}
-      - @league.matches.finished.where(season: i).each do |match|
-        - p1 = match.match_members.first.user
-        - p2 = match.match_members.last.user
-        - if match.match_members.first.winner
-          %h3.finished_match
-            %span.winner #{p1.username}
-            vs. #{p2.username}
-        - else
-          %h3.finished_match
-            %span.winner #{p2.username}
-            vs. #{p1.username}
+  #season_wrapper
+    - @league.season.times do |i|
+      - if i > 0
+        .season_box
+          %h3.season Season #{i}
+          - @league.matches.finished.where(season: i).each do |match|
+            - p1 = match.match_members.first.user
+            - p2 = match.match_members.last.user
+            - if match.match_members.first.winner
+              %h3.finished_match
+                %span.winner #{p1.username}
+                vs. #{p2.username}
+            - else
+              %h3.finished_match
+                %span.winner #{p2.username}
+                vs. #{p1.username}
