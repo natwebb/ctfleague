@@ -79,6 +79,10 @@ table {
       background-color: #999999;
       color: white;
     }
+
+    th.damage {
+      color: red;
+    }
   }
 
   tbody {
@@ -91,5 +95,11 @@ table {
     tr:nth-child(odd) {
       background-color: #FFFFFF;
     }
+  }
+}
+
+table {
+  input.table_button {
+    width: 60px;
   }
 }
