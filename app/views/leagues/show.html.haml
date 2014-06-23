@@ -1,6 +1,7 @@
 %h1.league_h1= @league.name
-- my_team = current_user.teams.find_by_league_id(@league.id)
-%h2= button_to "View My Team", league_team_path(@league.id, my_team.id), :class => 'draft_button', :method => :get
+- if @league.users.include?(current_user)
+  - my_team = current_user.teams.find_by_league_id(@league.id)
+  %h2= button_to "View My Team", league_team_path(@league.id, my_team.id), :class => 'team_button', :method => :get
 
 - if @league.active
   - if @league.users.include?(current_user)
@@ -10,14 +11,13 @@
     - else
       %h2.league_h2 Time to fight!
       - @league.matches.active.each do |match|
-        %p.active_match #{match.users.first.username} vs. #{match.users.last.username}
-        = form_tag('/finish', method: 'post') do
-          = hidden_field_tag(:match_id, match.id)
-          = hidden_field_tag(:league_id, @league.id)
-          = submit_tag("Finish")
-      %h2.league_h2 Finished Matches
-      - @league.matches.finished.each do |match|
-        %p.finished_match #{match.users.first.username} vs. #{match.users.last.username}
+        - p1 = match.users.first
+        - p2 = match.users.last
+        - t1 = p1.teams.find_by_league_id(@league.id)
+        - t2 = p2.teams.find_by_league_id(@league.id)
+        %h3.active_match #{t1.name} (#{p1.username}) vs. #{t2.name} (#{p2.username})
+        - if p1 == current_user || p2 == current_user
+          %h2= button_to "Start", start_league_match_path(@league, match), :class => 'draft_button'
 - else
   - if current_user == @league.commissioner
     = button_to "Begin Draft", league_drafts_path(@league), :class => 'draft_button'
@@ -27,7 +27,6 @@
       = text_field_tag(:emails)
       = hidden_field_tag(:league_id, @league.id)
       = submit_tag("Invite")
-
   - if !@league.users.include?(current_user)
     %h2.league_h2 Join the League
     = form_tag('/join', method: 'post') do
@@ -45,3 +44,16 @@
     - if user == @league.commissioner
       Commissioner:
     #{user.username}
+
+%h2.league_h2 Finished Matches
+- @league.matches.finished.each do |match|
+  - p1 = match.match_members.first.user
+  - p2 = match.match_members.last.user
+  - if match.match_members.first.winner
+    %h3.finished_match
+      %span.winner #{p1.username}
+      vs. #{p2.username}
+  - else
+    %h3.finished_match
+      %span.winner #{p2.username}
+      vs. #{p1.username}

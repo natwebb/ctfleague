@@ -5,6 +5,12 @@ Rails.application.routes.draw do
 
   resources :users
   resources :leagues do
+    resources :matches do
+      member do
+        post 'start'
+        post 'finish'
+      end
+    end
     resources :teams do
       resources :tokens
     end
@@ -17,7 +23,6 @@ Rails.application.routes.draw do
 
   post 'invite' => 'leagues#send_invite'
   post 'join' => 'leagues#join_league'
-  post 'finish' => 'leagues#finish_match'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
