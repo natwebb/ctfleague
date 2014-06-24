@@ -3,17 +3,17 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
     @league = League.find(params[:league_id])
 
-    team_1 = @match.users.first.teams.find_by_league_id(params[:league_id])
-    team_2 = @match.users.last.teams.find_by_league_id(params[:league_id])
+    @team_1 = @match.users.first.teams.find_by_league_id(params[:league_id])
+    @team_2 = @match.users.last.teams.find_by_league_id(params[:league_id])
 
-    if team_1.tokens.on_squad.length != 6 || team_2.tokens.on_squad.length != 6
+    if @team_1.tokens.on_squad.length != 6 || @team_2.tokens.on_squad.length != 6
       redirect_to league_path(@league), alert: "Both teams must have 6 units on their current squads."
     else
-      team_1.tokens.on_squad.each do |token|
+      @team_1.tokens.on_squad.each do |token|
         @match.match_tokens.create(:token => token, :side => 1)
       end
 
-      team_2.tokens.on_squad.each do |token|
+      @team_2.tokens.on_squad.each do |token|
         @match.match_tokens.create(:token => token, :side => 2)
       end
 
@@ -25,8 +25,11 @@ class MatchesController < ApplicationController
 
   def finish
     @match.finish
-    @league.check_for_end_of_round
 
+    @team_1.heal_bench_tokens
+    @team_2.heal_bench_tokens
+
+    @league.check_for_end_of_round
     redirect_to league_path(@league), notice: "The match has been finished."
   end
 

@@ -67,7 +67,6 @@ class League < ActiveRecord::Base
   end
 
   def iterate_round_robin
-    puts "Iterating round robin"
     @round_robin = self.round_robins.last
     @members = @round_robin.round_robin_members
 
