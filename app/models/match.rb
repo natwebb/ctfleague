@@ -11,6 +11,7 @@ class Match < ActiveRecord::Base
   def finish
     self.finished = true
     award_points
+    increase_unit_stats
     self.save
   end
 
@@ -23,6 +24,67 @@ class Match < ActiveRecord::Base
         membership.points = membership.points + 1
         membership.save
       end
+    end
+  end
+
+  def increase_unit_stats
+    side_1 = self.match_tokens.where(side: 1).to_a
+    side_2 = self.match_tokens.where(side: 2).to_a
+
+    side_1.map! do |match_token|
+      match_token.token.units.first.soldiers.first
+    end
+
+    side_2.map! do |match_token|
+      match_token.token.units.first.soldiers.first
+    end
+
+    side_1 = side_1.sort_by do |soldier|
+      soldier.leadership
+    end
+
+    side_2 = side_2.sort_by do |soldier|
+      soldier.leadership
+    end
+
+    leadership_1 = side_1.last.leadership
+    leadership_2 = side_2.last.leadership
+
+    puts "----------------------------------------------------"
+    puts leadership_1
+    puts "----------------------------------------------------"
+    puts leadership_2
+
+    side_1.each do |soldier|
+      puts "----------------------------------------------------"
+      puts soldier.aim
+      bonus = 2 * ((leadership_1 + 50)/100.00)
+      puts "----------------------------------------------------"
+      puts bonus
+      soldier.aim = soldier.aim + bonus
+      soldier.speed = soldier.speed + bonus
+      soldier.stealth = soldier.stealth + bonus
+      soldier.sight = soldier.sight + bonus
+      soldier.hardiness = soldier.hardiness + bonus
+      soldier.leadership = soldier.leadership + bonus
+      #XP +1 at the end of a match where they weren't incapacitated
+      #rank +1 at certain XP thresholds
+      soldier.save
+      puts "----------------------------------------------------"
+      puts soldier.aim
+    end
+
+    side_2.each do |soldier|
+      bonus = 2 * ((leadership_2 + 50)/100)
+      soldier.aim = soldier.aim + bonus
+      soldier.speed = soldier.speed + bonus
+      soldier.stealth = soldier.stealth + bonus
+      soldier.sight = soldier.sight + bonus
+      soldier.hardiness = soldier.hardiness + bonus
+      soldier.leadership = soldier.leadership + bonus
+      #XP +1 at the end of a match where they weren't incapacitated
+      #rank +1 at certain XP thresholds
+      soldier.save
     end
   end
 end

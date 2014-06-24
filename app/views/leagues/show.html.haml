@@ -52,11 +52,14 @@
       = submit_tag("Join")
 
 %h2.league_h2 Members
-- @league.users.each do |user|
-  %p.member_name
-    - if user == @league.commissioner
-      Commissioner:
-    #{user.username}
+.member_box
+  - @league.memberships.order(points: :desc).each do |membership|
+    - user = membership.user
+    %p.member_name
+      #{user.username}
+      - if user == @league.commissioner
+        (Commissioner)
+      = "... Points: #{membership.points}"
 
 - if @league.users.include?(current_user)
   %h2.league_h2 Previous Seasons
