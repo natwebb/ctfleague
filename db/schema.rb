@@ -73,11 +73,7 @@ ActiveRecord::Schema.define(version: 20140624161023) do
     t.integer  "league_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-<<<<<<< HEAD
-=======
-    t.integer  "user_id"
     t.integer  "points"
->>>>>>> ac78140c77fcbfbb7f1b975f09a13234ad9cfd32
   end
 
   create_table "round_robin_members", force: true do |t|
