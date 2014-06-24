@@ -7,5 +7,5 @@
     %p
       Greetings, #{@member.username}! The draft has begun for #{@league.name}. Your draft position is #{@snake_position.position}.
     %p
-      To view the draft, just follow this link:
-      = league_draft_url(@league.id, @draft.id)
+      To view the draft, just follow
+      = link_to "this link.", league_draft_url(@league, @draft)
