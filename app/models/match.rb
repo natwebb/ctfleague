@@ -10,6 +10,19 @@ class Match < ActiveRecord::Base
 
   def finish
     self.finished = true
+    award_points
     self.save
+  end
+
+  private
+
+  def award_points
+    self.match_members.each do |match_member|
+      if match_member.winner
+        membership = self.league.memberships.find_by_user_id(match_member.user_id)
+        membership.points = membership.points + 1
+        membership.save
+      end
+    end
   end
 end
