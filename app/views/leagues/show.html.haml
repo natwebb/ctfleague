@@ -1,13 +1,15 @@
 %h1.league_h1= @league.name
+%h2.league_h2 Season #{@league.season}
+
 - if @league.users.include?(current_user)
   - my_team = current_user.teams.find_by_league_id(@league.id)
-  %h2= button_to "View My Team", league_team_path(@league.id, my_team.id), :class => 'team_button', :method => :get
+  = button_to "View My Team", league_team_path(@league.id, my_team.id), :class => 'team_button', :method => :get
 
 - if @league.active
   - if @league.users.include?(current_user)
     - if @league.drafting
       - draft = @league.drafts.last
-      %h2= button_to "View Draft", league_draft_path(@league.id, draft.id), :class => 'draft_button', :method => :get
+      = button_to "View Draft", league_draft_path(@league.id, draft.id), :class => 'draft_button', :method => :get
     - else
       %h2.league_h2 Time to fight!
       - @league.matches.active.each do |match|
@@ -17,14 +19,25 @@
         - t2 = p2.teams.find_by_league_id(@league.id)
         %h3.active_match #{t1.name} (#{p1.username}) vs. #{t2.name} (#{p2.username})
         - if p1 == current_user || p2 == current_user
-          %h2= button_to "Start", start_league_match_path(@league, match), :class => 'draft_button'
+          = button_to "Start", start_league_match_path(@league, match), :class => 'draft_button'
+      - @league.matches.finished.where(season: @league.season).each do |match|
+        - p1 = match.match_members.first.user
+        - p2 = match.match_members.last.user
+        - if match.match_members.first.winner
+          %h3.finished_match
+            %span.winner #{p1.username}
+            vs. #{p2.username}
+        - else
+          %h3.finished_match
+            %span.winner #{p2.username}
+            vs. #{p1.username}
 - else
   - if current_user == @league.commissioner
-    = button_to "Begin Draft", league_drafts_path(@league), :class => 'draft_button'
+    = button_to "Begin Season", league_drafts_path(@league), :class => 'draft_button'
     %h2.league_h2 Add Members to the League
     = form_tag('/invite', method: 'post') do
-      = label_tag(:emails, "Enter player emails: ")
-      = text_field_tag(:emails)
+      = label_tag(:emails, "Enter player emails, separated by commas: ")
+      = text_area_tag(:emails)
       = hidden_field_tag(:league_id, @league.id)
       = submit_tag("Invite")
   - if !@league.users.include?(current_user)
@@ -45,15 +58,21 @@
       Commissioner:
     #{user.username}
 
-%h2.league_h2 Finished Matches
-- @league.matches.finished.each do |match|
-  - p1 = match.match_members.first.user
-  - p2 = match.match_members.last.user
-  - if match.match_members.first.winner
-    %h3.finished_match
-      %span.winner #{p1.username}
-      vs. #{p2.username}
-  - else
-    %h3.finished_match
-      %span.winner #{p2.username}
-      vs. #{p1.username}
+- if @league.users.include?(current_user)
+  %h2.league_h2 Previous Seasons
+  #season_wrapper
+    - @league.season.times do |i|
+      - if i > 0
+        .season_box
+          %h3.season Season #{i}
+          - @league.matches.finished.where(season: i).each do |match|
+            - p1 = match.match_members.first.user
+            - p2 = match.match_members.last.user
+            - if match.match_members.first.winner
+              %h3.finished_match
+                %span.winner #{p1.username}
+                vs. #{p2.username}
+            - else
+              %h3.finished_match
+                %span.winner #{p2.username}
+                vs. #{p1.username}

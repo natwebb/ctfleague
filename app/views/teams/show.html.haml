@@ -13,6 +13,7 @@
     %th Hardiness
     %th Leadership
     %th Average
+    %th.damage Damage
     %th Remove from Squad
   %tbody
     - @team.tokens.on_squad.each do |token|
@@ -27,12 +28,13 @@
         %td= soldier.hardiness
         %td= soldier.leadership
         %td= (soldier.aim + soldier.sight + soldier.stealth + soldier.speed + soldier.hardiness + soldier.leadership)/6
+        %td= soldier.damage
         %td
           = simple_form_for([@league, @team, token]) do |f|
             = f.hidden_field :on_squad, :value => false
-            = f.button :submit, "Remove"
+            = f.button :submit, "Remove", :class => 'table_button'
 
-%h2 Team Roster
+%h2 Bench
 %table
   %thead
     %th Last Name
@@ -44,6 +46,7 @@
     %th Hardiness
     %th Leadership
     %th Average
+    %th.damage Damage
     %th Add to Squad
   %tbody
     - @team.tokens.off_squad.each do |token|
@@ -58,7 +61,8 @@
         %td= soldier.hardiness
         %td= soldier.leadership
         %td= (soldier.aim + soldier.sight + soldier.stealth + soldier.speed + soldier.hardiness + soldier.leadership)/6
+        %td= soldier.damage
         %td
           = simple_form_for([@league, @team, token]) do |f|
             = f.hidden_field :on_squad, :value => true
-            = f.button :submit, "Add"
+            = f.button :submit, "Add", :class => 'table_button'

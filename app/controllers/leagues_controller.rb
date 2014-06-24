@@ -5,6 +5,7 @@ class LeaguesController < ApplicationController
 
   def create
     @league = current_user.leagues.build(league_params)
+    @league.season = 1
     if @league.save
       @league.users << current_user
       redirect_to new_league_team_path(@league), notice: "Your league has been created!"

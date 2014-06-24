@@ -7,6 +7,8 @@ class DraftsController < ApplicationController
       redirect_to league_path(@league)
     else
       @draft = Draft.new
+      @draft.season = @league.season
+      @draft.save
       @league.drafts << @draft
       @league.active = true
       @league.drafting = true

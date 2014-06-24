@@ -3,6 +3,10 @@
 
 body {
   margin: 0;
+  background: white asset-data-url('spacemarine.png') no-repeat;
+  background-position: -5% -150%;
+  background-attachment: fixed;
+  background-size: 40%;
 }
 
 #wrapper {
@@ -75,6 +79,10 @@ table {
       background-color: #999999;
       color: white;
     }
+
+    th.damage {
+      color: red;
+    }
   }
 
   tbody {
@@ -83,5 +91,15 @@ table {
     tr:nth-child(even) {
       background-color: #DDDDDD;
     }
+
+    tr:nth-child(odd) {
+      background-color: #FFFFFF;
+    }
+  }
+}
+
+table {
+  input.table_button {
+    width: 60px;
   }
 }
