@@ -44,6 +44,10 @@ textarea#emails {
   margin-bottom: 0px;
 }
 
+.member_name:first-child {
+  font-weight: bold;
+}
+
 .member_name:nth-child(even) {
   background-color: rgba(100, 100, 100, 0.5);
 }
