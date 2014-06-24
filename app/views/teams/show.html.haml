@@ -66,3 +66,7 @@
           = simple_form_for([@league, @team, token]) do |f|
             = f.hidden_field :on_squad, :value => true
             = f.button :submit, "Add", :class => 'table_button'
+
+%p            
+%span Back to
+%span.bottom_nav_back=link_to "#{@league.name}", league_path(@league.id)
