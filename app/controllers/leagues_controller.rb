@@ -48,14 +48,15 @@ class LeaguesController < ApplicationController
   def join_league
     @league = League.find(params[:league_id])
     @user = User.find(params[:user_id])
-    @team = Team.new
-    @team.name = params[:team_name]
-    @team.save
 
     if @league.league_key = params[:league_key]
+      @team = Team.new
+      @team.name = params[:team_name]
+      @team.save
+
       @league.teams << @team
       @user.teams << @team
-      @league.users << @user
+      @league.memberships.create(:user => @user, :points => 0)
       redirect_to league_path(@league.id)
     else
       flash[:alert] = "You have entered an incorrect League Key."
