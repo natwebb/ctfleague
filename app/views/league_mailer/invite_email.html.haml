@@ -5,8 +5,12 @@
   %body
     %h1 You have been invited to a league on CTFLeague!
     %p
-      If you are already a member of CTFLeague, follow the link below to accept the invitation. You'll need to enter your League Key, which is #{@league_key}.
-      If you aren't yet a member, please sign up for CTFLeague using this email address, then follow the link below.
+      If you are already a member of CTFLeague, follow the link below to accept the invitation. You'll need to enter your League Key, which is <strong>#{@league_key}</strong>.
     %p
-      To log in to the site, just follow this link:
+      If you aren't yet a member, please sign up for CTFLeague, then follow the link below.
+    %p
+      To log in to the site, just follow this link: <a href="
       = league_url(@league_id)
+      ">
+      = league_url(@league_id)
+      </a>
