@@ -11,8 +11,7 @@ class TeamsController < ApplicationController
       current_user.teams << @team
       redirect_to league_path(@league), notice: "Your team has been created!"
     else
-      flash[:alert] = "Your team could not be created."
-      render :new
+      redirect_to new_league_team_path(@league), alert: "Your team could not be created."
     end
   end
 

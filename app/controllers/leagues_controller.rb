@@ -7,7 +7,7 @@ class LeaguesController < ApplicationController
     @league = current_user.leagues.build(league_params)
     @league.season = 1
     if @league.save
-      @league.users << current_user
+      @league.memberships.create(:user => current_user, :points => 0)
       redirect_to new_league_team_path(@league), notice: "Your league has been created!"
     else
       flash[:alert] = "Your league could not be created."

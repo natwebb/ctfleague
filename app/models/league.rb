@@ -1,9 +1,9 @@
 class League < ActiveRecord::Base
   belongs_to :commissioner, :class_name => :User, :foreign_key => 'user_id'
-  has_many :teams
+  has_many :teams, dependent: :destroy
   has_many :seasons
   has_many :drafts
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
   has_many :round_robins
   has_many :matches
