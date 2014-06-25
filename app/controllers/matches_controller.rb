@@ -1,8 +1,16 @@
 class MatchesController < ApplicationController
-  def start
+  def ready
     @match = Match.find(params[:id])
     @league = League.find(params[:league_id])
 
+    match_member = @match.match_members.find_by_user_id(current_user.id)
+    match_member.ready = true
+    match_member.save
+
+    check_if_both_are_ready
+  end
+
+  def start
     @team_1 = @match.users.first.teams.find_by_league_id(params[:league_id])
     @team_2 = @match.users.last.teams.find_by_league_id(params[:league_id])
 
@@ -34,6 +42,16 @@ class MatchesController < ApplicationController
   end
 
   private
+
+  def check_if_both_are_ready
+    ready = true
+    @match.match_members.each do |member|
+      ready = false if member.ready != true
+    end
+
+    start if ready
+    redirect_to league_path(@league), notice: "Waiting for your opponent to be ready." if !ready
+  end
 
   def simulate_match
     @match.tokens.each do |token|

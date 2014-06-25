@@ -13,13 +13,13 @@
     - else
       %h2.league_h2 Time to fight!
       - @league.matches.active.each do |match|
-        - p1 = match.users.first
-        - p2 = match.users.last
+        - p1 = match.match_members.first.user
+        - p2 = match.match_members.last.user
         - t1 = p1.teams.find_by_league_id(@league.id)
         - t2 = p2.teams.find_by_league_id(@league.id)
         %h3.active_match #{t1.name} (#{p1.username}) vs. #{t2.name} (#{p2.username})
-        - if p1 == current_user || p2 == current_user
-          = button_to "Start", start_league_match_path(@league, match), :class => 'draft_button'
+        - if p1 == current_user && !match.match_members.first.ready || p2 == current_user && !match.match_members.last.ready
+          = button_to "Ready!", ready_league_match_path(@league, match), :class => 'draft_button'
       - @league.matches.finished.where(season: @league.season).each do |match|
         - p1 = match.match_members.first.user
         - p2 = match.match_members.last.user
