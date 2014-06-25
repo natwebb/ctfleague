@@ -21,6 +21,21 @@ class Soldier < ActiveRecord::Base
     self.save
   end
 
+  def age_up
+    self.age = self.age + 1
+    self.save
+  end
+
+  def check_for_retirement
+    if self.age == 30
+      self.retired = true
+      self.save
+
+      self.unit.token.on_squad = false
+      self.unit.token.save
+    end
+  end
+
   private
 
   def generate_stat

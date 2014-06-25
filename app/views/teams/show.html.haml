@@ -6,6 +6,7 @@
   %thead
     %th Last Name
     %th First Name
+    %th Age
     %th Aim
     %th Sight
     %th Stealth
@@ -21,6 +22,7 @@
       %tr
         %td= soldier.last_name
         %td= soldier.first_name
+        %td= soldier.age
         %td= soldier.aim/100
         %td= soldier.sight/100
         %td= soldier.stealth/100
@@ -39,6 +41,7 @@
   %thead
     %th Last Name
     %th First Name
+    %th Age
     %th Aim
     %th Sight
     %th Stealth
@@ -51,21 +54,50 @@
   %tbody
     - @team.tokens.off_squad.each do |token|
       - soldier = token.units.first.soldiers.first
-      %tr
-        %td= soldier.last_name
-        %td= soldier.first_name
-        %td= soldier.aim/100
-        %td= soldier.sight/100
-        %td= soldier.stealth/100
-        %td= soldier.speed/100
-        %td= soldier.hardiness/100
-        %td= soldier.leadership/100
-        %td= (soldier.aim + soldier.sight + soldier.stealth + soldier.speed + soldier.hardiness + soldier.leadership)/600
-        %td= soldier.damage
-        %td
-          = simple_form_for([@league, @team, token]) do |f|
-            = f.hidden_field :on_squad, :value => true
-            = f.button :submit, "Add", :class => 'table_button'
+      - if !soldier.retired
+        %tr
+          %td= soldier.last_name
+          %td= soldier.first_name
+          %td= soldier.age
+          %td= soldier.aim/100
+          %td= soldier.sight/100
+          %td= soldier.stealth/100
+          %td= soldier.speed/100
+          %td= soldier.hardiness/100
+          %td= soldier.leadership/100
+          %td= (soldier.aim + soldier.sight + soldier.stealth + soldier.speed + soldier.hardiness + soldier.leadership)/600
+          %td= soldier.damage
+          %td
+            = simple_form_for([@league, @team, token]) do |f|
+              = f.hidden_field :on_squad, :value => true
+              = f.button :submit, "Add", :class => 'table_button'
+
+%h2 Retired
+%table
+  %thead
+    %th Last Name
+    %th First Name
+    %th Aim
+    %th Sight
+    %th Stealth
+    %th Speed
+    %th Hardiness
+    %th Leadership
+    %th Average
+  %tbody
+    - @team.tokens.off_squad.each do |token|
+      - soldier = token.units.first.soldiers.first
+      - if soldier.retired
+        %tr
+          %td= soldier.last_name
+          %td= soldier.first_name
+          %td= soldier.aim/100
+          %td= soldier.sight/100
+          %td= soldier.stealth/100
+          %td= soldier.speed/100
+          %td= soldier.hardiness/100
+          %td= soldier.leadership/100
+          %td= (soldier.aim + soldier.sight + soldier.stealth + soldier.speed + soldier.hardiness + soldier.leadership)/600
 
 .small_text_box
   %p

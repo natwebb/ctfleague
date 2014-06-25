@@ -59,6 +59,7 @@ class League < ActiveRecord::Base
     @round_robin = self.round_robins.last
 
     if @round_robin.round == (@round_robin.round_robin_members.length - 1)
+      age_soldiers
       end_tournament
     else
       iterate_round_robin
@@ -67,7 +68,6 @@ class League < ActiveRecord::Base
   end
 
   def iterate_round_robin
-    @round_robin = self.round_robins.last
     @members = @round_robin.round_robin_members
 
     @members.each do |member|
@@ -83,6 +83,16 @@ class League < ActiveRecord::Base
 
     @round_robin.round = @round_robin.round + 1
     @round_robin.save
+  end
+
+  def age_soldiers
+    self.teams.each do |team|
+      team.tokens.each do |token|
+        soldier = token.units.first.soldiers.first
+        soldier.age_up
+        soldier.check_for_retirement
+      end
+    end
   end
 
   def end_tournament
