@@ -7,8 +7,12 @@ class Draft < ActiveRecord::Base
 
   def generate_soldiers
     @league = League.find(self.league_id)
+
+    number_of_tokens = 4
+    number_of_tokens = 8 if self.season == 1
+
     @league.memberships.length.times do
-      8.times do
+      number_of_tokens.times do
         token = Token.new
         unit = Unit.new
         soldier = Soldier.new
