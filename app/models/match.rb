@@ -58,7 +58,7 @@ class Match < ActiveRecord::Base
     side_1.each do |soldier|
       puts "----------------------------------------------------"
       puts soldier.aim
-      bonus = 2 * ((leadership_1 + 50)/100.00)
+      bonus = 200 * ((leadership_1 + 5000)/10000.00)
       puts "----------------------------------------------------"
       puts bonus
       soldier.aim = soldier.aim + bonus
@@ -75,7 +75,7 @@ class Match < ActiveRecord::Base
     end
 
     side_2.each do |soldier|
-      bonus = 2 * ((leadership_2 + 50)/100)
+      bonus = 200 * ((leadership_2 + 5000)/10000.00)
       soldier.aim = soldier.aim + bonus
       soldier.speed = soldier.speed + bonus
       soldier.stealth = soldier.stealth + bonus

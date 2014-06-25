@@ -26,10 +26,11 @@ class Soldier < ActiveRecord::Base
   def generate_stat
     rg = RandomGaussian.new(50,16)
     stat = rg.norminv
-    if stat > 99
-      stat = 99
-    elsif stat < 1
-      stat = 1
+    stat = stat * 100
+    if stat > 9900
+      stat = 9900
+    elsif stat < 100
+      stat = 100
     end
     stat
   end
