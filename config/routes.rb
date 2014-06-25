@@ -7,8 +7,7 @@ Rails.application.routes.draw do
   resources :leagues do
     resources :matches do
       member do
-        post 'start'
-        post 'finish'
+        post 'ready'
       end
     end
     resources :teams do

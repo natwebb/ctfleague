@@ -50,17 +50,8 @@ class Match < ActiveRecord::Base
     leadership_1 = side_1.last.leadership
     leadership_2 = side_2.last.leadership
 
-    puts "----------------------------------------------------"
-    puts leadership_1
-    puts "----------------------------------------------------"
-    puts leadership_2
-
     side_1.each do |soldier|
-      puts "----------------------------------------------------"
-      puts soldier.aim
-      bonus = 2 * ((leadership_1 + 50)/100.00)
-      puts "----------------------------------------------------"
-      puts bonus
+      bonus = 200 * ((leadership_1 + 5000)/10000.00)
       soldier.aim = soldier.aim + bonus
       soldier.speed = soldier.speed + bonus
       soldier.stealth = soldier.stealth + bonus
@@ -70,12 +61,10 @@ class Match < ActiveRecord::Base
       #XP +1 at the end of a match where they weren't incapacitated
       #rank +1 at certain XP thresholds
       soldier.save
-      puts "----------------------------------------------------"
-      puts soldier.aim
     end
 
     side_2.each do |soldier|
-      bonus = 2 * ((leadership_2 + 50)/100)
+      bonus = 200 * ((leadership_2 + 5000)/10000.00)
       soldier.aim = soldier.aim + bonus
       soldier.speed = soldier.speed + bonus
       soldier.stealth = soldier.stealth + bonus
