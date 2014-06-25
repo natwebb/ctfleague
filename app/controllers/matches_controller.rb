@@ -49,14 +49,26 @@ class MatchesController < ApplicationController
       winning_member = @match.match_members.last
     end
 =end
-    winning.member = roto_winner
+    winning_member = roto_winner
     winning_member.winner = true
     winning_member.save
   end
 
   def roto_winner
+    #initialize variables
+    team_1_aim = 0
+    team_1_stealth = 0
+    team_1_speed = 0
+    team_1_sight = 0
+    team_1_hardiness = 0
+    team_2_aim = 0
+    team_2_stealth = 0
+    team_2_speed = 0
+    team_2_sight = 0
+    team_2_hardiness = 0
+
     #sums the stats for each team, this can probably be refactored with Reduce
-    @team_1.tokens.each do |token|
+    @team_1.tokens.on_squad.each do |token|
       soldier = token.units.first.soldiers.first
       team_1_aim = team_1_aim + soldier.aim
       team_1_stealth = team_1_stealth + soldier.stealth
@@ -65,7 +77,7 @@ class MatchesController < ApplicationController
       team_1_hardiness = team_1_hardiness + soldier.effective_hardiness
     end
 
-    @team2.tokens.each do |token|
+    @team_2.tokens.on_squad.each do |token|
       soldier = token.units.first.soldiers.first
       team_2_aim = team_2_aim + soldier.aim
       team_2_stealth = team_2_stealth + soldier.stealth
@@ -75,6 +87,8 @@ class MatchesController < ApplicationController
     end
 
     #compares each category
+    @team_1_roto_points = 0
+    @team_2_roto_points = 0
     head_to_head(team_1_aim, team_2_aim)
     head_to_head(team_1_stealth, team_2_stealth)
     head_to_head(team_1_speed, team_2_speed)
@@ -94,7 +108,7 @@ class MatchesController < ApplicationController
     #comparison totals the roto_points
     if team_1_stat > team_2_stat
       @team_1_roto_points += 1
-    elsif team_2_aim > team_1_aim
+    elsif team_2_stat > team_1_stat
       @team_2_roto_points +=1
     else
       #coin flip for tie breaker. This should be rare, since stats are out to 2 decimals.
@@ -104,4 +118,5 @@ class MatchesController < ApplicationController
         @team_2_roto_points +=1
       end
     end
+end
 end
