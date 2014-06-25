@@ -9,8 +9,5 @@
     %p
       If you aren't yet a member, please sign up for CTFLeague, then follow the link below.
     %p
-      To log in to the site, just follow this link: <a href="
-      = league_url(@league_id)
-      ">
-      = league_url(@league_id)
-      </a>
+      To log in to the site, just follow
+      = link_to "this link.", league_url(@league_id)
