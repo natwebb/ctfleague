@@ -127,6 +127,11 @@ class MatchesController < ApplicationController
     head_to_head(team_1_sight, team_2_sight)
     head_to_head(team_1_hardiness, team_2_hardiness)
 
+    puts "-------------------------------------------------------------------------"
+    puts "Team 1 roto points: #{@team_1_roto_points}"
+    puts "Team 2 roto points: #{@team_2_roto_points}"
+    puts "-------------------------------------------------------------------------"
+
     if @team_1_roto_points > @team_2_roto_points
       winner = @match.match_members.first
     else
