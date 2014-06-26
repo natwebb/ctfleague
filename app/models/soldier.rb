@@ -21,6 +21,15 @@ class Soldier < ActiveRecord::Base
     self.save
   end
 
+
+  def effective_hardiness
+    truehard = self.hardiness - self.damage * 10
+    if truehard < 1
+      truehard = 1
+    end
+    truehard
+  end
+
   def age_up
     self.age = self.age + 1
     self.save
