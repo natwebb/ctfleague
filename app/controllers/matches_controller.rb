@@ -132,8 +132,6 @@ class MatchesController < ApplicationController
     else
       winner = @match.match_members.last
     end
-
-    winner
   end
 
   def head_to_head (team_1_stat, team_2_stat)

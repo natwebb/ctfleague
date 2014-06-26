@@ -28,6 +28,7 @@ class Soldier < ActiveRecord::Base
       truehard = 1
     end
     truehard
+  end
 
   def age_up
     self.age = self.age + 1
