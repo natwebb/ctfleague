@@ -1,6 +1,6 @@
 == README
 
-= How to Start CTFLeague Locally
+=== How to Start CTFLeague Locally
 
 Clone to a directory.
 ->cd project_directory
@@ -8,11 +8,11 @@ Clone to a directory.
 ->rake db:migrate
 ->rails server
 
-= About
+=== Version
 
 Runs on Ruby 2.1.1p76.
 
-= Database
+=== Database
 
 Make sure Postgres is running. If you don't have it set up to run on boot, start it manually.
 
@@ -21,15 +21,15 @@ pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
 Stop manually:
 pg_ctl -D /usr/local/var/postgres stop -s -m fast
 
-= Configuration
+=== Configuration
 
 Mailgun API must be configured for production environment. Dev/test use letter_opener.
 
-= How to run the test suite
+=== How to run the test suite
 
 ?
 
-=  Deployment instructions
+===  Deployment instructions
 
 ?
 
