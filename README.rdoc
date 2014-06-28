@@ -3,10 +3,12 @@
 === How to Start CTFLeague Locally
 
 Clone to a directory.
-->cd project_directory
-->bundle install
-->rake db:migrate
-->rails server
+- cd project_directory
+- bundle install
+- rake db:migrate
+- rails server
+
+If you're running an old version, and run into some unexplained errors, it might be because we changed the database models. You can erase your old database and start with a new one by using "rake db:reset".
 
 === Version
 
@@ -36,6 +38,4 @@ Mailgun API must be configured for production environment. Dev/test use letter_o
 
 * ...
 
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+rake doc:app
