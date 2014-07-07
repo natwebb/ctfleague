@@ -1,28 +1,41 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+=== How to Start CTFLeague Locally
 
-Things you may want to cover:
+Clone to a directory.
+- cd project_directory
+- bundle install
+- rake db:migrate
+- rails server
 
-* Ruby version
+If you're running an old version, and run into some unexplained errors, it might be because we changed the database models. You can erase your old database and start with a new one by using "rake db:reset".
 
-* System dependencies
+=== Version
 
-* Configuration
+Runs on Ruby 2.1.1p76.
 
-* Database creation
+=== Database
 
-* Database initialization
+Make sure Postgres is running. If you don't have it set up to run on boot, start it manually.
 
-* How to run the test suite
+Start manually:
+pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
+Stop manually:
+pg_ctl -D /usr/local/var/postgres stop -s -m fast
 
-* Services (job queues, cache servers, search engines, etc.)
+=== Configuration
 
-* Deployment instructions
+Mailgun API must be configured for production environment. Dev/test use letter_opener.
+
+=== How to run the test suite
+
+?
+
+===  Deployment instructions
+
+?
+
 
 * ...
 
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+rake doc:app
